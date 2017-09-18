@@ -140,27 +140,16 @@ gulp.task('build', gulp.series('clean', 'all'));
 gulp.task('ws', function(cb) {
   browserSync({
     server: {
-      baseDir: paths.dirs.build
+      baseDir: paths.dirs.build + '/pages'
     },
     port: 8000,
-    notify: false,
-    open: false
+    notify: false
   }, cb);
 });
 
-//gulp.task('stream', function () {
-//    // Endless stream mode 
-//    return watch('css/**/*.css', { ignoreInitial: false })
-//        .pipe(gulp.dest('build'));
-//});
-// 
-//gulp.task('callback', function () {
-//    // Callback mode, useful if any plugin in the pipeline depends on the `end`/`flush` event 
-//    return watch('css/**/*.css', function () {
-//        gulp.src('css/**/*.css')
-//            .pipe(gulp.dest('build'));
-//    });
-//});
+gulp.task('watch', function() {
+    gulp.parallel('watch:styles','watch:code');
+});
 
 gulp.task('watch:styles', function () {
     gulp.watch(paths.sass, 'sass');
@@ -179,7 +168,7 @@ gulp.task('watch:code', function () {
   ], gulp.series('build', browserSync.reload));
 });
 
-gulp.task('watch', gulp.parallel('watch:styles'));
+// gulp.task('watch', gulp.parallel('watch:styles'));
 
 // Default task
 gulp.task('default', gulp.series('build', 'ws', 'watch'));
