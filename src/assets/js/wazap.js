@@ -1,0 +1,2 @@
+getElementbyID('£nea');
+wiwowo
